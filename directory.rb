@@ -24,7 +24,9 @@ end
 
 def print(students)
   students.each do |student|
-    puts "#{student[:name]} (#{student[:cohort]} cohort)"
+    if student[:name].downcase.start_with?("c")
+      puts "#{student[:name]} (#{student[:cohort]} cohort)"
+    end
   end
 end
 
