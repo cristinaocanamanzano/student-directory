@@ -19,12 +19,12 @@ end
 
 def print_header
   puts "The students of Villains Academy"
-  puts "------------------------------------"
+  puts "-------------"
 end
 
 def print(students)
   students.each do |student|
-      puts "#{student[:name]} (#{student[:cohort]} cohort)".center(40)
+      puts "#{student[:name]} (#{student[:cohort]} cohort)"
   end
 end
 
