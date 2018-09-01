@@ -25,8 +25,14 @@ def print_header
 end
 
 def print(students)
-  students.each do |student|
-    puts "#{student[:name]} (#{student[:cohort]} cohort)"
+  cohorts = students.map{ |student| student[:cohort]}.uniq
+  cohorts.each do |cohort|
+    puts cohort.capitalize
+    students.each do |student|
+      if student[:cohort] == cohort
+        puts student[:name]
+      end
+    end
   end
 end
 
