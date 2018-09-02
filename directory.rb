@@ -1,4 +1,6 @@
+require 'csv'
 @students = [] # an empty array accessible to all methods
+
 
 def print_menu
   puts "1. Input the students"
@@ -13,6 +15,10 @@ def interactive_menu
     print_menu
     process(STDIN.gets.chomp)
   end
+end
+
+def add_students(name, cohort = :november)
+  @students << {name: name, cohort: cohort}
 end
 
 def process(selection)
@@ -40,7 +46,7 @@ def input_students
   # while the name is not empty, repeat this code
   while !name.empty? do
     # add the student hash to the array
-    @students << {name: name, cohort: :november}
+    add_students(name)
     puts "Now we have #{@students.count} students"
     # get another name from the user
     name = STDIN.gets.chomp
@@ -68,7 +74,7 @@ def print_footer
   puts "Overall, we have #{@students.count} great students"
 end
 
-def save_students
+def save_students(filename = "students.csv")
   # open the file for writing
   file = File.open("students.csv", "w")
   # iterate over the array of students
@@ -78,19 +84,21 @@ def save_students
     file.puts csv_line
   end
   file.close
+  puts "The list has been saved to the file"
 end
 
 def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
-  name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym}
+  name = line.chomp.split(',')
+  add_students(name)
   end
   file.close
+  puts "The list has been loaded"
 end
 
 def try_load_students
-  filename = ARGV.first# first argument from the command line
+  filename = ARGV.first # first argument from the command line
   return if filename.nil? # get out of the method if it isn't given
   if File.exists?(filename) # if it exists
     load_students(filename)
